@@ -1,0 +1,10 @@
+{
+  "name": "legendarynormal",
+  "version": "1.0.4",
+  "title": "Legendary Normal",
+  "author": "SuperPyroManiac",
+  "description": "This mod sets the normal quality stats to match legendary stats (Configurable). This applies to everything without actually changing their quality level. Optional settings to keep enemies and asteroids at normal stats.",
+  "factorio_version": "2.0",
+  "space_travel_required": true,
+  "dependencies": ["space-age", "quality"]
+}

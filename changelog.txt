@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------------------------------
+Version: 1.0.4
+Date: 02. 23. 2026
+  Features:
+    - Added Ignore Asteroids setting to restore asteroid stats to vanilla normal quality values.
+    - Switched enemy stat normalization from runtime entity replacement to data-stage scaling reversal.
+    - Added support for Gleba pentapods (stompers and strafers) in enemy ignore system.
+    - Demolishers now correctly have their stats restored to vanilla values when the Ignore Enemies setting is enabled.
+    - Added acid damage normalization for spitter and worm attacks (impact, puddle, and sticker damage).
+  Bugfixes:
+    - Fixed Gleba spider-unit enemies (pentapods) not being handled by the Ignore Enemies setting.
+    - Fixed electric mining drill resource drain not being patched (wrong internal entity name).
+    - Fixed burner mining drill resource drain not being patched (missing from drill list).
+    - Fixed electric and burner mining drills using incorrect drain values (were using big mining drill values).
+---------------------------------------------------------------------------------------------------
+Version: 1.0.3
+Date: 06. 29. 2025
+  Bugfixes:
+    - Adjusted mining drills resource drain to correctly match the quality level. Thanks @Harras420 for the report.
+    - Adjusted pumpjacks resource drain to correctly match the quality level.
+---------------------------------------------------------------------------------------------------
+Version: 1.0.2
+Date: 06. 21. 2025
+  Bugfixes:
+    - Enemy drops that are basic quality are converted to normal quality as to not break crafting recipes.
+---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Date: 06. 16. 2025
+  Features:
+    - Added a thumbnail image.
+---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 06. 05. 2022
+  Features:
+    - Initial release.
