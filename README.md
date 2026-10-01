@@ -1,3 +1,7 @@
+> [!important]
+> To create issues / suggestions please use the unified issue tracker:
+> **https://github.com/PyrosFun/IssueTracker**
+
 # Legendary Normal - Customize Normal Quality Stats
 
 Allows you to change the quality stats of normal quality items without breaking other game features.
