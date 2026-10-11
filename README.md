@@ -7,6 +7,8 @@
 Allows you to change the quality stats of normal quality items without breaking other game features.
 Fully configurable — by default, normal quality matches legendary stats. Set the level anywhere from 0 (vanilla normal) to 10 if you want to go beyond legendary.
 
+Requires Factorio 2.1.21 or newer, with Space Age and Quality enabled.
+
 ## Features
 
 - **Quality Level Setting** — Set the normal quality level from 0 to 10. Level 5 matches legendary, anything above is uncharted territory.
@@ -15,7 +17,7 @@ Fully configurable — by default, normal quality matches legendary stats. Set t
 
 ## How It Works
 
-This mod changes the quality level of "normal" quality itself, so crafting, research, and all other game mechanics scale naturally without any hacks. No items or recipes are modified — just the quality definition.
+This mod changes the quality level of "normal" quality itself, so crafting, research, and all other game mechanics scale naturally without any hacks. Item identities and recipes stay unchanged. Explicit quality bonuses are set alongside the level so beacon efficiency, mining resource drain, science pack drain, and train stats also match the selected tier. Factorio applies its remaining quality bonuses automatically.
 
 ### Enemies
 Since changing the quality level affects everything, enemies would also get boosted stats. The **Ignore Enemies** setting counteracts this so enemies retain their vanilla strength.
@@ -29,7 +31,7 @@ Same idea — the **Ignore Asteroids** setting ensures asteroid health stays at 
 > Note: Enabling this technically makes asteroids much weaker than normal, since your turrets will be doing legendary-tier damage against vanilla-health asteroids.
 
 ### Mining Drills
-Mining drill resource drain is hard-coded and doesn't respond to quality level changes, so the mod manually sets drain values to match the selected quality level. The drain caps at 8% for any level above 3, matching legendary behavior. If you craft an actual legendary drill on top of this, the drain will drop below 1% — extremely powerful, but hey, it's your game. If you find any other objects that have issues with their stats please let me know.
+Resource drain uses the quality API, so it applies to all mining drills, including drills added by other mods. At level 5, normal drills use one sixth of their base resource drain: about 16.67% for standard drills and 8.33% for big mining drills. Resource drain and beacon power usage stop improving at level 5. Other bonuses continue scaling through level 10; wagon capacity interpolates between epic and legendary and continues at the same rate above legendary. Actual uncommon, rare, epic, and legendary qualities keep their own bonuses instead of stacking the normal-quality drain reduction.
 
 ## Contact
 For bug reports and suggestions, please open a work item on my personal git server.

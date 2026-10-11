@@ -6,12 +6,27 @@ if ignore_enemies then
     local basic_quality = table.deepcopy(data.raw.quality["normal"])
     basic_quality.name = "basic"
     basic_quality.level = 0
+    basic_quality.next = nil
+    basic_quality.next_probability = 0
     basic_quality.color = { r = 0, g = 0, b = 0 }
     basic_quality.localised_name = { "quality-name.basic" }
     data:extend({ basic_quality })
 end
 
-data.raw.quality["normal"].level = quality_level
+local normal_quality = data.raw.quality["normal"]
+normal_quality.level = quality_level
+normal_quality.beacon_power_usage_multiplier = math.max(1 / 6, 1 - quality_level / 6)
+normal_quality.mining_drill_resource_drain_multiplier = math.max(1 / 6, 1 - quality_level / 6)
+normal_quality.science_pack_drain_multiplier = 1 - quality_level / 100
+normal_quality.locomotive_power_multiplier = 1 + 0.2 * quality_level
+normal_quality.rolling_stock_max_speed_multiplier = 1 + 0.03 * quality_level
+
+-- Vanilla wagon capacity grows by 25% per tier, then jumps from 1.75 to 2.5 at legendary.
+if quality_level <= 3 then
+    normal_quality.cargo_wagon_inventory_size_multiplier = 1 + 0.25 * quality_level
+else
+    normal_quality.cargo_wagon_inventory_size_multiplier = 1.75 + 0.375 * (quality_level - 3)
+end
 
 local default_multiplier = 1 + 0.3 * quality_level
 local range_multiplier = math.min(1 + 0.1 * quality_level, 3)
@@ -34,15 +49,20 @@ local function counteract_damage_scaling(entity)
     end
 end
 
+local scaled_triggers = {}
+
 local function counteract_trigger_damage(trigger)
-    if not trigger then return end
-    for _, item in pairs(trigger) do
-        if item.action_delivery and item.action_delivery.target_effects then
-            for _, effect in pairs(item.action_delivery.target_effects) do
-                if effect.type == "damage" and effect.damage then
-                    effect.damage.amount = effect.damage.amount / default_multiplier
-                end
-            end
+    if type(trigger) ~= "table" or scaled_triggers[trigger] then return end
+    scaled_triggers[trigger] = true
+
+    if trigger.type == "damage" and trigger.damage then
+        trigger.damage.amount = trigger.damage.amount / default_multiplier
+        return
+    end
+
+    for _, value in pairs(trigger) do
+        if type(value) == "table" then
+            counteract_trigger_damage(value)
         end
     end
 end
@@ -51,42 +71,6 @@ local function counteract_enemy_scaling(entity)
     counteract_health_scaling(entity)
     counteract_range_scaling(entity)
     counteract_damage_scaling(entity)
-end
-
-local quality_to_drain_100 = {
-    [0] = 100,
-    [1] = 83,
-    [2] = 66,
-    [3] = 50,
-    [4] = 16,
-}
-
-local quality_to_drain_50 = {
-    [0] = 50,
-    [1] = 41,
-    [2] = 33,
-    [3] = 25,
-    [4] = 8,
-}
-
-local function get_drain(lookup, level)
-    return lookup[math.min(level, 4)] or lookup[0]
-end
-
-local drain_100 = get_drain(quality_to_drain_100, quality_level)
-local drain_50 = get_drain(quality_to_drain_50, quality_level)
-
-local drain_overrides = {
-    ["burner-mining-drill"]   = drain_100,
-    ["electric-mining-drill"] = drain_100,
-    ["big-mining-drill"]      = drain_50,
-    ["pumpjack"]              = drain_100,
-}
-
-for name, drain in pairs(drain_overrides) do
-    if data.raw["mining-drill"] and data.raw["mining-drill"][name] then
-        data.raw["mining-drill"][name].resource_drain_rate_percent = drain
-    end
 end
 
 if ignore_enemies and quality_level > 0 then

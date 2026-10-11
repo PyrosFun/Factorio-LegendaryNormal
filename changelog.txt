@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.0
+Date: 10. 11. 2026
+  Changes:
+    - Updated to Factorio 2.1.21 and required matching Base, Space Age, and Quality versions.
+    - Applied explicit quality bonuses for beacon power, science pack drain, wagon capacity, locomotive power, and train speed.
+    - Replaced mining drill overrides with the quality resource drain multiplier, including support for modded drills.
+  Bugfixes:
+    - Fixed level 4 resource drain and avoided stacking normal-quality drain reductions onto other quality tiers.
+    - Fixed acid damage normalization for single, nested, and shared trigger definitions.
+    - Kept legacy Basic quality out of the quality upgrade chain to avoid conflicting definitions.
+---------------------------------------------------------------------------------------------------
 Version: 1.0.4
 Date: 02. 23. 2026
   Features:
