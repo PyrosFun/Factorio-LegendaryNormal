@@ -1,5 +1,0 @@
-enabled: true
-
-issues:
-  auto_assign: owner
-  backfill_open: true
