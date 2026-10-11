@@ -72,6 +72,16 @@ local function migrate_basic_enemies()
     end
 end
 
-script.on_configuration_changed(function()
+script.on_configuration_changed(function(event)
     migrate_basic_enemies()
+
+    if not event.mod_changes["legendarynormal"] and not event.startup_settings_changed then return end
+
+    for _, surface in pairs(game.surfaces) do
+        for _, sticker in pairs(surface.find_entities_filtered({ type = "sticker" })) do
+            if string.find(sticker.name, "acid") then
+                sticker.destroy()
+            end
+        end
+    end
 end)

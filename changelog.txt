@@ -9,6 +9,10 @@ Date: 10. 11. 2026
     - Fixed level 4 resource drain and avoided stacking normal-quality drain reductions onto other quality tiers.
     - Fixed acid damage normalization for single, nested, and shared trigger definitions.
     - Kept legacy Basic quality out of the quality upgrade chain to avoid conflicting definitions.
+    - Removed normal-quality boosts to acid sticker movement, vehicle speed, friction, and duration.
+    - Fixed acid slowing characters and vehicles into reverse at boosted normal quality levels.
+    - Ground acid normalization now applies regardless of the Ignore Enemies setting.
+    - Cleared existing acid stickers on mod updates and startup setting changes so saved effects cannot retain broken stats.
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.4
 Date: 02. 23. 2026

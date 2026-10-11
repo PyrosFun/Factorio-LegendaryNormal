@@ -22,6 +22,8 @@ This mod changes the quality level of "normal" quality itself, so crafting, rese
 ### Enemies
 Since changing the quality level affects everything, enemies would also get boosted stats. The **Ignore Enemies** setting counteracts this so enemies retain their vanilla strength.
 
+Ground acid always keeps its vanilla damage and slowdown, including vehicle friction, regardless of this setting. Sticker duration stays close to vanilla, with at most a few ticks of rounding because Factorio requires whole ticks.
+
 > Note: Enabling this technically makes enemies much weaker than normal, since you're essentially fighting them with legendary weapons from the start.
 
 

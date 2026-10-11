@@ -110,7 +110,9 @@ if ignore_enemies and quality_level > 0 then
             counteract_trigger_damage(stream.action)
         end
     end
+end
 
+if quality_level > 0 then
     for name, fire in pairs(data.raw["fire"] or {}) do
         if string.find(name, "acid") then
             if fire.damage_per_tick then
@@ -119,10 +121,30 @@ if ignore_enemies and quality_level > 0 then
         end
     end
 
+    local sticker_modifiers = {
+        "target_movement_modifier",
+        "target_movement_modifier_from",
+        "target_movement_modifier_to",
+        "vehicle_speed_modifier",
+        "vehicle_speed_modifier_from",
+        "vehicle_speed_modifier_to",
+        "vehicle_friction_modifier",
+        "vehicle_friction_modifier_from",
+        "vehicle_friction_modifier_to",
+    }
+
     for name, sticker in pairs(data.raw["sticker"] or {}) do
         if string.find(name, "acid") then
             if sticker.damage_per_tick then
                 sticker.damage_per_tick.amount = sticker.damage_per_tick.amount / default_multiplier
+            end
+            sticker.duration_in_ticks = math.max(1, math.floor(sticker.duration_in_ticks / default_multiplier + 0.5))
+
+            -- Sticker quality scales the deviation from 1, rather than the modifier itself.
+            for _, field in ipairs(sticker_modifiers) do
+                if sticker[field] then
+                    sticker[field] = 1 + (sticker[field] - 1) / default_multiplier
+                end
             end
         end
     end
